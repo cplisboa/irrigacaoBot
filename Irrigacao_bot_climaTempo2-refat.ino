@@ -18,11 +18,12 @@ char password[] = "morandonaselva"; // Senha
 const char* host = "apiadvisor.climatempo.com.br";
 String urlTemp = "/api/v1/weather/locale/5448/current?token=3e3eee2fe995c0c3aa17b5e4dce813cf";
 String urlRain = "/api/v1/history/locale/5448?token=3e3eee2fe995c0c3aa17b5e4dce813cf&from=2019-11-18";
-time
+
 // Initialize Telegram BOT
 //#define BOTtoken "578304230:AAH5XorX8xN8eFpcba4HFAqQzmol_xGPE4Q"  // IDToken para PY3MH
 //#define BOTtoken "697666653:AAHHYLcaJ5AOfKYPFWMzhoWV_qYU8-YkiWE"  // IDToken para Dosador
-#define BOTtoken "1012551849:AAGqFdXE_7tO-3sHRXWUHnHjrhvSE0Qi-1g"  // IDToken para IrrigacaoBot (Cleo)
+//#define BOTtoken "1012551849:AAGqFdXE_7tO-3sHRXWUHnHjrhvSE0Qi-1g"  // IDToken para IrrigacaoBot (Cleo)
+#define BOTtoken "1012551849:AAEhO6jQ-xf7bekfu7gdc0dt7MsMhrZG_3E"  //novo token (Cleo)
 
 WiFiClientSecure client;
 WiFiClient clientHttp;
@@ -128,11 +129,11 @@ void handleNewMessages(int numNewMessages){
                 
             if(MotorStatus){
                 if(acionadoPeloUsuario)
-                    Estado+="Equipamento ligado por ação do usuário.\n";                 
+                    Estado+="Irrigação ligada por ação do usuário.\n";                 
                 else
-                    Estado+="Equipamento ligado por tempo.\n"; 
+                    Estado+="Irrigação ligada por tempo.\n"; 
             } else {      
-                Estado+="Equipamento ligado.\n";     
+                Estado+="Irrigação desligada.\n";     
             }
 
             Estado+="Hora "+String(hora)+":"+String(minuto)+"\n";   
@@ -266,6 +267,7 @@ void setup() {
     Serial.println("\nData e hora adquiridas");
     SistemStatus=1;               //Inicializa sistema ativado
     recupera_EEPROM();
+    client.setInsecure();
 } //fim setup
 
 void loop(){
