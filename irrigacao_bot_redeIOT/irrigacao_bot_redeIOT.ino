@@ -381,37 +381,6 @@ void programaArduino(){
     Serial.println("Arduino programado com os timers.");
 }
 
-String salvaMedida(long dado){
-  const char* planilha = "api.pushingbox.com";  //api.pushingbox.com/pushingbox?devid=v12ED30F60EACC06&texto=
-  String urlPlanilha = "/pushingbox?devid=v12ED30F60EACC06&texto=";
-  
-  Serial.println("connecting to "+planilha);
-  
-  // Use WiFiClient class to create TCP connections
-  WiFiClient client;
-  const int httpPort = 80;
-  if (!client.connect(planilha, httpPort)) {
-    Serial.println("connection failed");
-    return "falha ao conectar na planilha do google";
-  } else{
-    Serial.println("Conexão realizada com planilha google.");
-  }
-  Serial.println("Requesting URL: "+urlPlanilha);
-
-  // This will send the request to the server
-  client.print(String("GET ") + urlPlanilha + dado + " HTTP/1.1\r\n" +
-               "Host: " + planilha + "\r\n" + 
-               "Connection: close\r\n\r\n");
-  unsigned long timeout = millis();
-  while (client.available() == 0) {
-    if (millis() - timeout > 5000) {
-      Serial.println(">>> Client Timeout !");
-      client.stop();
-      return "Timeout ao acessar planilha";
-    }
-  }
-  return "ok";  
-}
 
 String leParamClimaTempo(String param, String url){
   Serial.print("connecting to ");
